@@ -12,7 +12,11 @@ void add(stack_t **stack, unsigned int line_number)
 	stack_t *second = (*stack)->next;
 
 	if (*stack == NULL || (*stack)->next == NULL)
+	{
 		print_error(line_number, "can't add, stack too short");
+		cleanup(*stack);
+		exit(EXIT_FAILURE);
+	}
 
 	sum = top->n + second->n;
 

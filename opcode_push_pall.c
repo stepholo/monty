@@ -8,7 +8,6 @@
 void print_error(unsigned int line_number, const char *message)
 {
 	fprintf(stderr, "L%u: %s\n", line_number, message);
-	exit(EXIT_FAILURE);
 }
 
 /**
@@ -43,12 +42,18 @@ void push(stack_t **stack, unsigned int line_number)
 	stack_t *new_node;
 
 	if (!arg || !is_integer(arg))
+	{
 		print_error(line_number, "Usage: push integer");
+		cleanup(*stack);
+		exit(EXIT_FAILURE);
+	}
 
 	new_node = malloc(sizeof(stack_t));
 	if (!new_node)
+	{
 		print_error(line_number, "Error: malloc failed");
-
+		exit(EXIT_FAILURE);
+	}
 
 	new_node->n = atoi(arg);
 	new_node->prev = NULL;
@@ -58,13 +63,14 @@ void push(stack_t **stack, unsigned int line_number)
 		(*stack)->prev = new_node;
 
 	*stack = new_node;
+
 }
 
 /**
 * pall - prints all the values on the stack, starting from the
 * top of the stack
 * @stack: Pointer to the pointer to the top of the stack
-* @line_number: line number of the stack
+* @line_number: line number of the stack`
 */
 void pall(stack_t **stack, unsigned int line_number)
 {
@@ -74,6 +80,7 @@ void pall(stack_t **stack, unsigned int line_number)
 	while (current)
 	{
 		printf("%d\n", current->n);
+		fflush(stdout);
 		current = current->next;
 	}
 }
