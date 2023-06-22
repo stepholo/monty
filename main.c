@@ -58,6 +58,8 @@ int process_instructions(FILE *file, stack_t *stack)
 				{"pop", pop},
 				{"add", add},
 				{"pint", pint},
+				{"swap", swap},
+				{"nop", nop},
 				/* Add more opcode-function paires as needed */
 				{NULL, NULL}
 			};
