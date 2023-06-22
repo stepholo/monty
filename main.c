@@ -1,5 +1,22 @@
 #include "monty.h"
 
+
+/**
+* cleanup - Free the memory allocated to the nodes
+* @stack: pointer to the top of the stack
+*/
+void cleanup(stack_t *stack)
+{
+	stack_t *current = stack;
+
+	while (current != NULL)
+	{
+		stack_t *temp = current;
+
+		current = current->next;
+		free(temp);
+	}
+}
 /**
 * main - Programs Entry point
 * @argv: Argument vector
@@ -25,11 +42,13 @@ int main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 
-	process_instructions(file, stack);
+	process_instructions(file, &stack);
 
 	fclose(file);
 
-	return (EXIT_SUCCESS);
+	cleanup(stack);
+
+	return (0);
 }
 
 /**
@@ -39,27 +58,28 @@ int main(int argc, char *argv[])
 * @stack: Pointer to the top of the stack
 * Return: The exit status
 */
-int process_instructions(FILE *file, stack_t *stack)
+int process_instructions(FILE *file, stack_t **stack)
 {
-	char line[512];
+	char line[1024];
 	unsigned int line_number = 1;
 	int i;
 	char *opcode;
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
+		if (line[0] == '#')
+		{
+			line_number++;
+			continue;
+		}
 		opcode = strtok(line, " \t\n");
-
 		if (opcode)
 		{
 			instruction_t instructions[] = {
-				{"push", push},
-				{"pall", pall},
-				{"pop", pop},
-				{"add", add},
-				{"pint", pint},
-				{"swap", swap},
-				{"nop", nop},
+				{"push", push}, {"pall", pall}, {"pop", pop}, {"add", add},
+				{"pint", pint}, {"swap", swap}, {"nop", nop}, {"sub", sub},
+				{"mul", mul}, {"pstr", pstr}, {"rotr", rotr}, {"stack", _stack},
+				{"queue", _queue},
 				/* Add more opcode-function paires as needed */
 				{NULL, NULL}
 			};
@@ -67,7 +87,7 @@ int process_instructions(FILE *file, stack_t *stack)
 			{
 				if (strcmp(opcode, instructions[i].opcode) == 0)
 				{
-					instructions[i].f(&stack, line_number);
+					instructions[i].f(stack, line_number);
 					break;
 				}
 			}
