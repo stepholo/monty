@@ -77,9 +77,9 @@ int process_instructions(FILE *file, stack_t **stack)
 		{
 			instruction_t instructions[] = {
 				{"push", push}, {"pall", pall}, {"pop", pop}, {"add", add},
-				{"pint", pint}, {"swap", swap}, {"nop", nop}, {"sub", sub},
-				{"mul", mul}, {"pstr", pstr}, {"rotr", rotr}, {"stack", _stack},
+				{"pint", pint}, {"swap", swap}, {"nop", nop}, {"sub", sub},				{"mul", mul}, {"pstr", pstr}, {"rotr", rotr}, {"stack", _stack},
 				{"queue", _queue},
+				{"mod", mod},
 				/* Add more opcode-function paires as needed */
 				{NULL, NULL}
 			};
