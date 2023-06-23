@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <ctype.h>
 
 /**
 * pstr - Prints the string starting at the top of the stack,
@@ -19,3 +20,26 @@ void pstr(stack_t **stack, __attribute__((unused))unsigned int line_number)
 	printf("\n");
 }
 
+/**
+ * pchar - prints the character at the top of a stack
+ * @stack: stack pointer
+ * @line_number: line number
+ */
+void pchar(stack_t **stack, unsigned int line_number)
+{
+	stack_t *ptr = *stack;
+	int val;
+	if ((*stack) == NULL)
+	{
+		printf("L%d: can't pchar, stack empty\n",line_number);
+		exit(EXIT_FAILURE);
+	}
+	val = ptr->n;
+	if (!isprint(val))
+	{
+		printf("L%d: can't pchar, value out of range", line_number);
+		exit(EXIT_FAILURE);
+	}
+	putchar(val);
+	putchar('\n');
+}

@@ -80,6 +80,8 @@ int process_instructions(FILE *file, stack_t **stack)
 				{"pint", pint}, {"swap", swap}, {"nop", nop}, {"sub", sub},				{"mul", mul}, {"pstr", pstr}, {"rotr", rotr}, {"stack", _stack},
 				{"queue", _queue},
 				{"mod", mod},
+				/*{div, div},*/
+				{"pchar", pchar},
 				/* Add more opcode-function paires as needed */
 				{NULL, NULL}
 			};

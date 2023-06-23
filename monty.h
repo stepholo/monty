@@ -56,6 +56,7 @@ void _stack(stack_t **stack, __attribute((unused))unsigned int line_number);
 void _queue(stack_t **stack, __attribute((unused))unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
 /*void div(stack_t **stack, unsigned int line_number);*/
+void pchar(stack_t **stack, unsigned int line_number);
 
 /* Helper functions */
 void print_error(unsigned int line_number, const char *message);
