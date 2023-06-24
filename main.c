@@ -95,7 +95,7 @@ int process_instructions(FILE *file, stack_t **stack)
 			}
 			if (instructions[i].opcode == NULL)
 			{
-				fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 				return (EXIT_FAILURE);
 			}
 		}
