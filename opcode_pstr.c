@@ -31,13 +31,15 @@ void pchar(stack_t **stack, unsigned int line_number)
 	int val;
 	if ((*stack) == NULL)
 	{
-		printf("L%d: can't pchar, stack empty\n",line_number);
+		print_error(line_number, "can't pchar, stack empty");
+		cleanup(*stack);
 		exit(EXIT_FAILURE);
 	}
 	val = ptr->n;
 	if (!isprint(val))
 	{
-		printf("L%d: can't pchar, value out of range", line_number);
+		print_error(line_numbet, "can't pchar, value out of range");
+		cleanup(*stack);
 		exit(EXIT_FAILURE);
 	}
 	putchar(val);
