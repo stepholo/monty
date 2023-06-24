@@ -38,7 +38,7 @@ void pchar(stack_t **stack, unsigned int line_number)
 	val = ptr->n;
 	if (!isprint(val))
 	{
-		print_error(line_numbet, "can't pchar, value out of range");
+		print_error(line_number, "can't pchar, value out of range");
 		cleanup(*stack);
 		exit(EXIT_FAILURE);
 	}
