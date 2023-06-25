@@ -26,7 +26,14 @@ void cleanup(stack_t *stack)
 int main(int argc, char *argv[])
 {
 	FILE *file;
-	stack_t *stack = NULL;
+
+	stack_t *stack = malloc(sizeof(stack_t));
+
+	if (stack == NULL)
+	{
+		fprintf(stderr, "malloc failed\n");
+		return (EXIT_FAILURE);
+	}
 
 	if (argc != 2)
 	{
@@ -49,6 +56,27 @@ int main(int argc, char *argv[])
 	cleanup(stack);
 
 	return (0);
+}
+
+/**
+* execute_instruction - Executes a single instruction
+* @instruction: The opcode and corresponding function to execute
+* @stack: Pointer to the top of the stack
+* @line_number: The current line number
+* @opcode: The opcode to execute
+* Return: 1 if the instruction was executed succesfully, 0 otherwise
+*/
+int execute_instruction(instruction_t *instruction, stack_t **stack,
+		unsigned int line_number, char *opcode)
+{
+	if (instruction->opcode ==  NULL)
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+		return (0);
+	}
+
+	instruction->f(stack, line_number);
+	return (1);
 }
 
 /**
@@ -77,27 +105,22 @@ int process_instructions(FILE *file, stack_t **stack)
 		{
 			instruction_t instructions[] = {
 				{"push", push}, {"pall", pall}, {"pop", pop}, {"add", add},
-				{"pint", pint}, {"swap", swap}, {"nop", nop}, {"sub", sub},				{"mul", mul}, {"pstr", pstr}, {"rotr", rotr}, {"stack", _stack},
-				{"queue", _queue},
-				{"mod", mod},
-				/*{div, div},*/
+				{"pint", pint}, {"swap", swap}, {"nop", nop}, {"sub", sub},
+				{"mul", mul}, {"pstr", pstr}, {"rotl", rotl}, {"rotr", rotr},
+				{"stack", _stack}, {"queue", _queue}, {"mod", mod}, {"div", _div},
 				{"pchar", pchar},
 				/* Add more opcode-function paires as needed */
 				{NULL, NULL}
 			};
+
 			for (i = 0; instructions[i].opcode != NULL; i++)
 			{
 				if (strcmp(opcode, instructions[i].opcode) == 0)
 				{
-					instructions[i].f(stack, line_number);
+					if (!execute_instruction(&instructions[i], stack, line_number, opcode))
+						return (EXIT_FAILURE);
 					break;
 				}
-			}
-			if (instructions[i].opcode == NULL)
-			{
-				/*fprintf(stderr, L%d: unknown instruction %s\n, line_number, opcode);*/
-				printf("L%d: unknown instruction %s\n", line_number, opcode);
-				return (EXIT_FAILURE);
 			}
 		}
 		line_number++;
