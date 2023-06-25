@@ -8,13 +8,13 @@
 void cleanup(stack_t *stack)
 {
 	stack_t *current = stack;
+	stack_t *next = NULL;
 
 	while (current != NULL)
 	{
-		stack_t *temp = current;
-
 		current = current->next;
-		free(temp);
+		free(current);
+		current = next;
 	}
 }
 /**
@@ -27,13 +27,7 @@ int main(int argc, char *argv[])
 {
 	FILE *file;
 
-	stack_t *stack = malloc(sizeof(stack_t));
-
-	if (stack == NULL)
-	{
-		fprintf(stderr, "malloc failed\n");
-		return (EXIT_FAILURE);
-	}
+	stack_t *stack = NULL;
 
 	if (argc != 2)
 	{
