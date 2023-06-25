@@ -21,14 +21,15 @@ void pstr(stack_t **stack, __attribute__((unused))unsigned int line_number)
 }
 
 /**
- * pchar - prints the character at the top of a stack
- * @stack: stack pointer
- * @line_number: line number
- */
+* pchar - prints the character at the top of a stack
+* @stack: stack pointer
+* @line_number: line number
+*/
 void pchar(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr = *stack;
 	int val;
+
 	if ((*stack) == NULL)
 	{
 		print_error(line_number, "can't pchar, stack empty");
