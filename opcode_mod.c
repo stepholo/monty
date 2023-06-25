@@ -1,21 +1,32 @@
 #include "monty.h"
 /**
- * mod - opcode modulus
- * @stack: stack  pointer
- * @line_number: line number
- */
+* mod - opcode modulus
+* @stack: stack  pointer
+* @line_number: line number
+*/
 void mod(stack_t **stack, unsigned int line_number)
 {
+	int mod;
+	stack_t *top = *stack;
+	stack_t *second = (*stack)->next;
+
 	if ((*stack) == NULL || (*stack)->next == NULL)
 	{
-		printf("L%d: can't mod, stack too short", line_number);
+		print_error(line_number, "can't mod, stack too short");
 		exit(EXIT_FAILURE);
 	}
-	if ((*stack)->n == 0)
+
+	if (top->n == 0)
 	{
-		printf("L%d: division by zero",line_number);
+		print_error(line_number, "division by zero");
 		exit(EXIT_FAILURE);
 	}
-	(*stack)->next->n %= (*stack)->n;
-	pop(stack, line_number);
+
+	mod = second->n % top->n;
+
+	second->n = mod;
+	*stack = second;
+	(*stack)->prev = NULL;
+
+	free(top);
 }
