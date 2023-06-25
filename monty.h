@@ -28,7 +28,7 @@ typedef struct stack_s
 * @opcode: the opcode
 * @f: function to handle the opcode
 *
-* Description: opcode and its function
+* Description - opcode and its function
 * for stack, queue, LIFO, FIFO
 */
 typedef struct instruction_s
@@ -47,7 +47,8 @@ void pop(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
-void nop(__attribute__((unused))stack_t **stack, __attribute__((unused))unsigned int line_number);
+void nop(__attribute__((unused))stack_t **stack,
+		__attribute__((unused))unsigned int line_number);
 void sub(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
 void pstr(stack_t **stack, __attribute__((unused))unsigned int line_number);
@@ -55,13 +56,16 @@ void rotr(stack_t **stack, __attribute__((unused))unsigned int line_number);
 void _stack(stack_t **stack, __attribute((unused))unsigned int line_number);
 void _queue(stack_t **stack, __attribute((unused))unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
-/*void div(stack_t **stack, unsigned int line_number);*/
+void _div(stack_t **stack, unsigned int line_number);
 void pchar(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
 
 /* Helper functions */
 void print_error(unsigned int line_number, const char *message);
 int is_integer(const char *str);
 int process_instructions(FILE *file, stack_t **stack);
 void cleanup(stack_t *stack);
+int execute_instruction(instruction_t *instruction, stack_t **stack,
+		unsigned int line_number, char *opcode);
 
 #endif /* MONTY_H */
