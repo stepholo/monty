@@ -8,13 +8,13 @@
 void cleanup(stack_t *stack)
 {
 	stack_t *current = stack;
-	stack_t *next = NULL;
 
 	while (current != NULL)
 	{
+		stack_t *temp = current;
+
 		current = current->next;
-		free(current);
-		current = next;
+		free(temp);
 	}
 }
 /**
@@ -50,27 +50,6 @@ int main(int argc, char *argv[])
 	cleanup(stack);
 
 	return (0);
-}
-
-/**
-* execute_instruction - Executes a single instruction
-* @instruction: The opcode and corresponding function to execute
-* @stack: Pointer to the top of the stack
-* @line_number: The current line number
-* @opcode: The opcode to execute
-* Return: 1 if the instruction was executed succesfully, 0 otherwise
-*/
-int execute_instruction(instruction_t *instruction, stack_t **stack,
-		unsigned int line_number, char *opcode)
-{
-	if (instruction->opcode ==  NULL)
-	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-		return (0);
-	}
-
-	instruction->f(stack, line_number);
-	return (1);
 }
 
 /**
@@ -111,10 +90,15 @@ int process_instructions(FILE *file, stack_t **stack)
 			{
 				if (strcmp(opcode, instructions[i].opcode) == 0)
 				{
-					if (!execute_instruction(&instructions[i], stack, line_number, opcode))
-						return (EXIT_FAILURE);
+					instructions[i].f(stack, line_number);
 					break;
 				}
+			}
+			if (instructions[i].opcode == NULL)
+			{
+				fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+				fflush(stderr);
+				return (EXIT_FAILURE);
 			}
 		}
 		line_number++;
