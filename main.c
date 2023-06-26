@@ -8,10 +8,11 @@
 void cleanup(stack_t *stack)
 {
 	stack_t *current = stack;
+	stack_t *temp;
 
 	while (current != NULL)
 	{
-		stack_t *temp = current;
+		temp = current;
 
 		current = current->next;
 		free(temp);
