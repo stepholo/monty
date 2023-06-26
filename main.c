@@ -48,7 +48,10 @@ int main(int argc, char *argv[])
 
 	fclose(file);
 
-	cleanup(stack);
+	if (stack)
+	{
+		cleanup(stack);
+	}
 
 	return (0);
 }
