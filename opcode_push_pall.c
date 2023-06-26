@@ -44,7 +44,6 @@ void push(stack_t **stack, unsigned int line_number)
 	if (!arg || !is_integer(arg))
 	{
 		print_error(line_number, "usage: push integer");
-		cleanup(*stack);
 		exit(EXIT_FAILURE);
 	}
 
