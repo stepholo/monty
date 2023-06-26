@@ -65,7 +65,5 @@ void print_error(unsigned int line_number, const char *message);
 int is_integer(const char *str);
 int process_instructions(FILE *file, stack_t **stack);
 void cleanup(stack_t *stack);
-int execute_instruction(instruction_t *instruction, stack_t **stack,
-		unsigned int line_number, char *opcode);
 
 #endif /* MONTY_H */
