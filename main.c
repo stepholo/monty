@@ -8,13 +8,14 @@
 void cleanup(stack_t *stack)
 {
 	stack_t *current = stack;
-	stack_t *next = NULL;
+	stack_t *temp;
 
 	while (current != NULL)
 	{
+		temp = current;
+
 		current = current->next;
-		free(current);
-		current = next;
+		free(temp);
 	}
 }
 /**
@@ -111,10 +112,14 @@ int process_instructions(FILE *file, stack_t **stack)
 			{
 				if (strcmp(opcode, instructions[i].opcode) == 0)
 				{
-					if (!execute_instruction(&instructions[i], stack, line_number, opcode))
-						return (EXIT_FAILURE);
+					instructions[i].f(stack, line_number);
 					break;
 				}
+			}
+			if (instructions[i].opcode == NULL)
+			{
+				printf("L%d: unknown instuction %s\n", line_number, opcode);
+				return (1);
 			}
 		}
 		line_number++;
